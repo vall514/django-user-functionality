@@ -1,1 +1,0 @@
-# Django User Management Project
