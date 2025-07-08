@@ -6,6 +6,13 @@ from django.contrib.auth import get_user_model
 import random
 from.forms import EditProfileForm
 from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'accounts/change_password.html'
+    success_url = reverse_lazy('profile')  # R
 
 
 
@@ -31,8 +38,8 @@ def register(request):
  
 
 def profile_view(request):
-    if not request.user.is_authenticated:
-        return redirect('verify_user')  # Redirect to login if user is not authenticated  
+    #if not request.user.is_authenticated:
+        #return redirect('verify_user')  # Redirect to login if user is not authenticated  
     return render(request, 'accounts/profile.html')
 
 def edit_profile(request):
