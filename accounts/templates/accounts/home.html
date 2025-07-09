@@ -1,14 +1,25 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <div class="container text-center mt-5">
-    <h1>Welcome to the Homepage</h1>
-    <p>You’ve successfully logged out or landed on the main site.</p>
-    {% if user.is_authenticated %}
-      <p>Hello, {{ user.username }}!</p>
-      <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-    {% endif %}
-  </div>
+<div class="container mt-5 text-center">
+  <h1 class="mb-4 text-white">Welcome to the User Portal 🚀</h1>
+
+  {% if user.is_authenticated %}
+    <div class="card shadow-sm p-4 border-0 rounded-4">
+      <h4 class="mb-3">Welcome back, {{ user.username }} 👋</h4>
+      <a href="{% url 'profile' %}" class="btn btn-primary mb-2 w-100">View Profile</a>
+      <a href="{% url 'edit_profile' %}" class="btn btn-warning mb-2 w-100">Edit Profile</a>
+      <a href="{% url 'password_change' %}" class="btn btn-secondary mb-2 w-100">Change Password</a>
+      <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
+    </div>
+
+  {% else %}
+    <div class="card shadow-sm p-4 border-0 rounded-4">
+      <p class="mb-3">New here? Get started below!</p>
+      <a href="{% url 'register' %}" class="btn btn-success mb-2 w-100">Create an Account</a>
+      <a href="{% url 'login' %}" class="btn btn-primary w-100">Login</a>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}

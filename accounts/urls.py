@@ -11,5 +11,5 @@ urlpatterns = [
     path('change-password/', views.CustomPasswordChangeView.as_view(template_name='accounts/change_password.html'
     ), name='change_password'),
     path('verify/', views.verify_user, name='verify_user'),
-    path('home/', views.profile_view, name='home')
+    path('home/', views.profile_view, name='home'),
 ] 

@@ -71,3 +71,6 @@ def verify_user(request):
             return render(request, 'accounts/verify.html', {'error': 'Invalid verification code'})
 
     return render(request, 'accounts/verify.html')
+
+def home(request):
+    return render(request, 'home.html')

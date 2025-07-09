@@ -41,7 +41,7 @@ form {
     position: relative;
 }
 
-/* Form title */
+/* Form title 
 form::before {
     content: "Register";
     display: block;
@@ -50,7 +50,7 @@ form::before {
     font-weight: 600;
     margin-bottom: 30px;
     text-align: center;
-}
+}*/
 
 /* Style the form fields directly */
 form > * {
