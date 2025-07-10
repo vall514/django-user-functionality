@@ -1,10 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
+<div class="auth-wrapper">          {# full‑page purple gradient #}
+
+  <div class="auth-card">          {# white rounded rectangle #}
+
+      <h2 class="text-center mb-4">Login</h2>
+
+      <form method="POST" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+              {{ form.username.label_tag }}
+              {{ form.username }}
+              {% if form.username.errors %}
+                  <small class="text-danger">{{ form.username.errors.0 }}</small>
+              {% endif %}
+          </div>
+
+          <div class="mb-3">
+              {{ form.password.label_tag }}
+              {{ form.password }}
+              {% if form.password.errors %}
+                  <small class="text-danger">{{ form.password.errors.0 }}</small>
+              {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+
+          {% if form.non_field_errors %}
+              <div class="form-error mt-3">
+                  {% for error in form.non_field_errors %}
+                      {{ error|safe }}<br>
+                  {% endfor %}
+              </div>
+          {% endif %}
+      </form>
+
+      <p class="mt-4 text-center">
+          Don’t have an account?
+          <a href="{% url 'register' %}">Create one</a>
+      </p>
+
+  </div><!-- /.auth-card -->
+
+</div><!-- /.auth-wrapper -->
 {% endblock %}

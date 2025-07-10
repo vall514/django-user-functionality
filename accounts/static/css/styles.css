@@ -22,8 +22,6 @@ body:has(form) > span {
     display: none;
 }
 
-/* Alternative: If the above doesn't work, use this more specific approach */
-/* Only hide navigation links when they're loose in the body on register page */
 body > a:first-child,
 body > span:contains('|'),
 body > a:last-of-type {
@@ -41,23 +39,12 @@ form {
     position: relative;
 }
 
-/* Form title 
-form::before {
-    content: "Register";
-    display: block;
-    color: #333;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    text-align: center;
-}*/
-
 /* Style the form fields directly */
 form > * {
     margin-bottom: 20px;
 }
 
-/* Label styles - target labels directly */
+/* Label styles */
 form label {
     display: block;
     margin-bottom: 6px;
@@ -80,7 +67,6 @@ input[type="password"] {
     background: #fafafa;
 }
 
-/* Input focus states */
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
@@ -105,83 +91,51 @@ form button {
     transition: all 0.3s ease;
     margin-top: 10px;
 }
-
-/* Button hover effects */
 form input[type="submit"]:hover,
 form button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
-
-/* Button active state */
-form input[type="submit"]:active,
-form button:active {
-    transform: translateY(0);
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6f7cf6, #7d4fb7);
+    padding: 2rem;
 }
 
-/* Responsive design */
-@media (max-width: 480px) {
-    form {
-        padding: 30px 25px;
-        margin: 10px;
-    }
-    
-    form::before {
-        font-size: 24px;
-    }
-}
-
-/* Styles for other page elements (like verification page) */
-/* Allow divs, headings, and other common elements to display normally */
-div, h1, h2, h3, h4, h5, h6, p, span:not(body > span) {
-    display: block;
-}
-
-/* Style for verification page or other content containers */
-.container, .content, .verification-container {
+.auth-card {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    padding: 40px;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
     width: 100%;
-    max-width: 400px;
-    text-align: center;
+    margin: 3rem auto;
 }
 
-.container h1, .content h1, .verification-container h1 {
+.profile-info {
+    margin-bottom: 2rem;
     color: #333;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
-.container p, .content p, .verification-container p {
-    color: #666;
-    margin-bottom: 20px;
-    line-height: 1.5;
+.profile-info p {
+    margin-bottom: 0.5rem;
 }
-/* Makes the greeting stay at the top */
-.top-header {
-    position: fixed;
-    top: 0;
+
+.profile-image {
+    display: block;
+    margin: 1rem auto;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.profile-image img {
     width: 100%;
-    background: #5f60d3; /* Match your gradient or use a solid color */
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-/* Push the main content down so it doesn’t go under the header */
-.main-content {
-    margin-top: 80px; /* enough space for header height */
-}
-
-/* Optional: styling links */
-.top-header a {
-    color: #ffe;
-    text-decoration: none;
-    margin-left: 10px;
+    height: 100%;
+    border-radius: 50%;
 }

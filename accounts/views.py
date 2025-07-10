@@ -4,11 +4,14 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import random
-from.forms import EditProfileForm
+from .forms import EditProfileForm ,CustomUserChangeForm
 from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import EditProfileForm, ProfileImageForm   # new form for the image
+from .models import Profile                             # if you use a separate model
+
 
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'accounts/change_password.html'
@@ -18,39 +21,70 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 
 User = get_user_model()
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
+
 def register(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.verification_code = str(random.randint(100000, 999999))
-            user.save()
-            print(f"Mock verification code for {user.username}: {user.verification_code}")
-            request.session['username_to_verify'] = user.username
-            return redirect('verify_user')
-        else:
-            print(form.errors)  # 🔍 Print form errors in the console
-            messages.error(request, "Please correct the errors below.")  # Show error message
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'accounts/register.html', {'form': form})
- 
-
-def profile_view(request):
-    #if not request.user.is_authenticated:
-        #return redirect('verify_user')  # Redirect to login if user is not authenticated  
-    return render(request, 'accounts/profile.html')
-
-def edit_profile(request):
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect("login")
+    else:
+        form = RegisterForm()
+
+    return render(request, "accounts/register.html", {"form": form})
+
+# accounts/views.py# Make sure to import your Profile model
+
+@login_required
+def profile_view(request):
+    # Get or create profile - this fixes the error
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        user_form = CustomUserChangeForm(request.POST, instance=request.user)
+        image_form = ProfileImageForm(request.POST, request.FILES, instance=profile)
+        
+        if user_form.is_valid() and image_form.is_valid():
+            user_form.save()
+            image_form.save()
             return redirect('profile')
     else:
-        form = EditProfileForm(instance=request.user)
-    return render(request, 'accounts/edit_profile.html', {'form': form})
+        user_form = CustomUserChangeForm(instance=request.user)
+        image_form = ProfileImageForm(instance=profile)
+     
+    return render(request, 'accounts/profile.html', {
+        'user_form': user_form,
+        'image_form': image_form
+    })
+@login_required
+@login_required
+def edit_profile(request):
+    user = request.user
+    profile = user.profile
+
+    if request.method == "POST":
+        user_form  = EditProfileForm(request.POST, instance=user)
+        image_form = ProfileImageForm(
+            request.POST, request.FILES, instance=profile
+        )
+        if user_form.is_valid() and image_form.is_valid():
+            user_form.save()
+            if request.FILES.get("image"):
+                image_form.save()
+            messages.success(request, "Profile updated!")
+            return redirect("profile")
+    else:
+        user_form  = EditProfileForm(instance=user)
+        image_form = ProfileImageForm(instance=profile)
+
+    return render(
+        request,
+        "accounts/edit_profile.html",
+        {"user_form": user_form, "image_form": image_form},
+    )
+
 
 
 def verify_user(request):
@@ -73,4 +107,4 @@ def verify_user(request):
     return render(request, 'accounts/verify.html')
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'accounts/home.html')
