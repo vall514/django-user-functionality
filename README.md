@@ -119,7 +119,7 @@ Below are a few key UI screens from the application:
 ### 📝 Registration Page
 User enters credentials to sign up and gets a verification code.
 
-![Register](screenshots/register.png)
+![Register](![alt text](image-2.png))
 
 ---
 
@@ -133,21 +133,21 @@ User verifies their account using the generated 6-digit code.
 ### 🔓 Login Page
 Only verified users can log in. Others are redirected with a warning.
 
-![Login](screenshots/login.png)
+![Login](![alt text](image-1.png))
 
 ---
 
 ### 👤 Profile Page
 Displays user info; only accessible when logged in.
 
-![Profile](screenshots/profile.png)
+![Profile](![alt text](image-3.png))
 
 ---
 
 ### 🛠️ Edit Profile Page
 Allows users to update their username or email.
 
-![Edit Profile](screenshots/edit-profile.png)
+![Edit Profile](![alt text](image-4.png))
 
 ---
 
@@ -161,7 +161,7 @@ Lets users change their password securely without admin access.
 ### 🧑‍💼 Admin Panel
 Accessible by superusers to manage accounts.
 
-![Admin Panel](screenshots/admin.png)
+![Admin Panel](![alt text](image-5.png))
 
 
 
