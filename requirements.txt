@@ -2,3 +2,7 @@ asgiref==3.9.0
 Django==5.2.4
 sqlparse==0.5.3
 tzdata==2025.2
+psycopg2-binary==2.9.10
+whitenoise==6.8.2
+pillow==11.0.0
+gunicorn==21.2.0
